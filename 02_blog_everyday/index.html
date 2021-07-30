@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload file bằng javascript</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="index.js"></script>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<main>
+  <div class="container imageUploadContainer">
+    <div>
+      <img
+              src="img/default.jpg"
+              alt="Ảnh xem trước"
+              id="imagePreview">
+    </div>
+    <div class="imageUpload">
+      <input type="file" id="imageUploadInput" accept=".jpg,.png">
+      <span class="button" id="imageUploadInputBtn">Chọn Hình</span>
+      <span class="button" id="sendData">Gửi</span>
+    </div>
+    <div id="uploadFileStatus"></div>
+    <div class="fileInfomation">
+      <p>
+        Tên file:
+        <span id="fileInfomation_name">----</span>
+      </p>
+      <p>
+        Định dạng:
+        <span id="fileInfomation_type">----</span>
+      </p>
+      <p>
+        Dung lượng:
+        <span id="fileInfomation_size">----</span>
+      </p>
+    </div>
+  </div>
+</main>
+<script src="js/index.js" type="text/javascript"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+com/codegym/service/role/IRoleService.java
+ com.codegym.service.role.IRoleService
+com/codegym/service/user/IUserService.java
+ com.codegym.service.user.IUserService
+com/codegym/service/like/ILikeService.java
+ com.codegym.service.like.ILikeService
+com/codegym/formatter/RoleFormatter.java
+ com.codegym.formatter.RoleFormatter
+com/codegym/repository/ILikeRepository.java
+ com.codegym.repository.ILikeRepository
+com/codegym/model/Role.java
+ com.codegym.model.Role
+com/codegym/repository/IUserRepository.java
+ com.codegym.repository.IUserRepository
+com/codegym/service/statuspost/IStatusPostService.java
+ com.codegym.service.statuspost.IStatusPostService
+com/codegym/service/role/RoleService.java
+ com.codegym.service.role.RoleService
+com/codegym/repository/IStatusPostRepository.java
+ com.codegym.repository.IStatusPostRepository
+com/codegym/repository/IRoleRepository.java
+ com.codegym.repository.IRoleRepository
+com/codegym/config/AppInit.java
+ com.codegym.config.AppInit
+com/codegym/config/AppConfig.java
+ com.codegym.config.AppConfig
+com/codegym/service/IGeneralService.java
+ com.codegym.service.IGeneralService
+com/codegym/formatter/StatusPostFormatter.java
+ com.codegym.formatter.StatusPostFormatter
+com/codegym/controller/RoleController.java
+ com.codegym.controller.RoleController
+com/codegym/model/StatusPost.java
+ com.codegym.model.StatusPost
+com/codegym/service/statuspost/StatusPostService.java
+ com.codegym.service.statuspost.StatusPostService
+com/codegym/formatter/LocalDateFormatter.java
+ com.codegym.formatter.LocalDateFormatter
+com/codegym/model/Post.java
+ com.codegym.model.Post
+com/codegym/service/comment/CommentService.java
+ com.codegym.service.comment.CommentService
+com/codegym/service/post/PostService.java
+ com.codegym.service.post.PostService
+com/codegym/repository/ICommentRepository.java
+ com.codegym.repository.ICommentRepository
+com/codegym/model/User.java
+ com.codegym.model.User
+com/codegym/model/Like.java
+ com.codegym.model.Like
+com/codegym/service/comment/ICommentService.java
+ com.codegym.service.comment.ICommentService
+com/codegym/service/like/LikeService.java
+ com.codegym.service.like.LikeService
+com/codegym/model/Comment.java
+ com.codegym.model.Comment
+com/codegym/service/user/UserService.java
+ com.codegym.service.user.UserService
+com/codegym/repository/IPostRepository.java
+ com.codegym.repository.IPostRepository
+com/codegym/service/post/IPostService.java
+ com.codegym.service.post.IPostService
+com/codegym/controller/UserController.java
+ com.codegym.controller.UserController

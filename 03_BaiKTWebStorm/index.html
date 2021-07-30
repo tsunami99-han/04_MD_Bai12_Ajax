@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        function findAllProduct(){
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api-products",
+                success: function (products) {
+                    let str = "<table border='2px'>" +
+                        "    <tr>" +
+                        "        <th>Name</th>" +
+                        "        <th>Price</th>" +
+                        "        <th>Quantity</th>" +
+                        "        <th>Color</th>" +
+                        "        <th>Description</th>" +
+                        "        <th>Category</th>" +
+                        "        <th>Action</th>" +
+                        "    <tr>\n";
+                    for (let i = 0; i < products.length; i++) {
+                        str += '<tr><td><a onclick="viewDetail(' + products[i].id + ')">' + products[i].name + '</a></td>'+'<td>'+products[i].price+'</td><td>'+products[i].quantity+'</td><td>'+products[0].color+'</td><td>'+products[0].description+'</td><td>'+products[0].category.name+'</td><td><a href="">Edit</a>|<a href="">Delete</a></td></tr>';
+                    }
+                    str+='</table>',
+                    document.getElementById("main").innerHTML = str;
+                }
+            });
+        }
+
+        function showFormCreate() {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api-categories",
+                success: function (data) {
+                    let str = ""
+                    for (let i = 0; i < data.length; i++) {
+                        str += "<option value='" + data[i].id + "'>" + data[i].name + "</option>"
+                    }
+                    document.getElementById("sub-main").innerHTML = '<h3>Create new product</h3>' +
+                        'Name : <input type="text" id="name"><br>' +
+                        'Price : <input type="number" id="price"><br>' +
+                        'Quantity : <input type="number" id="quantity"> <br>' +
+                        'Color : <input type="text" id="color"><br> ' +
+                        'Description : <input type="text" id="description"> <br>' +
+                        'Category : <select id="category">' + str + '</select>' +
+                        '<button onclick="add()">Create</button>';
+                }
+            });
+
+        }
+
+        function add() {
+            let name = document.getElementById("name").value;
+            let price = document.getElementById("price").value;
+            let quantity = document.getElementById("quantity").value;
+            let color = document.getElementById("color").value;
+            let desc = document.getElementById("description").value;
+            let category = document.getElementById("category").value;
+            let product = {
+                name: name,
+                price: price,
+                quantity:quantity,
+                color: color,
+                description: desc,
+                category: {
+                    id: category
+                }
+            }
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                url: "http://localhost:8080/api-products",
+                data: JSON.stringify(product),
+                success: findAllProduct ,
+                error: function (error) {
+
+                }
+            });
+        }
+        function viewDetail(id) {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api-products/"+id,
+                success: function (data) {
+                    let str =  'ID : <input type="text" id="name" value="'+data.id+'"><br>' +
+                        'Name : <input type="text" id="name" value="'+data.name+'"><br>' +
+                        'Price : <input type="number" id="price" value="'+data.price+'"><br>' +
+                        'Quantity : <input type="number" id="quantity" value="'+data.quantity+'"> <br>' +
+                        'Color : <input type="text" id="color" value="'+data.color+'"><br> ' +
+                        'Description : <input type="text" id="description" value="'+data.description+'"> <br>' +
+                        'Category: <input type="text" id="description" value="'+data.category.name+'"> <br>' +
+                        '<button>Save</button>';
+                }
+            });
+
+        }
+
+    </script>
+</head>
+<body onload="findAllProduct()">
+<div>Top</div>
+<div>
+    <button onclick="showFormCreate()">Create</button>
+</div>
+<div id="main">
+    Main
+</div>
+<div id="sub-main">
+    Sub-Main
+</div>
+<div>Footer</div>
+
+</body>
+</html>

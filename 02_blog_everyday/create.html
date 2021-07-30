@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <style>
+        .signup-btn {
+            background: #79bc64;
+            background-image: -webkit-linear-gradient(top, #79bc64, #578843);
+            background-image: -moz-linear-gradient(top, #79bc64, #578843);
+            background-image: -ms-linear-gradient(top, #79bc64, #578843);
+            background-image: -o-linear-gradient(top, #79bc64, #578843);
+            background-image: linear-gradient(to bottom, #79bc64, #578843);
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            text-shadow: 0px 1px 0px #898a88;
+            -webkit-box-shadow: 0px 0px 0px #a4e388;
+            -moz-box-shadow: 0px 0px 0px #a4e388;
+            box-shadow: 0px 0px 0px #a4e388;
+            font-family: Arial;
+            color: #ffffff;
+            font-size: 20px;
+            padding: 10px 20px 10px 20px;
+            border: solid #3b6e22 1px;
+            text-decoration: none;
+        }
+
+        .signup-btn:hover {
+            background: #79bc64;
+            background-image: -webkit-linear-gradient(top, #79bc64, #5e7056);
+            background-image: -moz-linear-gradient(top, #79bc64, #5e7056);
+            background-image: -ms-linear-gradient(top, #79bc64, #5e7056);
+            background-image: -o-linear-gradient(top, #79bc64, #5e7056);
+            background-image: linear-gradient(to bottom, #79bc64, #5e7056);
+            text-decoration: none;
+        }
+    </style>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+        function selectRole() {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api/roles",
+                success: function (data) {
+                    let str = ""
+                    for (let i = 0; i < data.length; i++) {
+                        str += "<option value='" + data[i].id + "'>" + data[i].name + "</option>"
+                    }
+                    document.getElementById("roleSet").innerHTML = str
+                    console.log(data)
+                }
+            })
+        }
+
+        function addUser() {
+            let username = $('#username').val();
+            let password = $('#password').val();
+            let fullName = $('#fullName').val();
+            let dateOfBirth = $('#dateOfBirth').val();
+            let address = $('#address').val();
+            let phoneNum = $('#phoneNum').val();
+            let roleSet = $('#roleSet').val();
+            let user = {
+                username: username,
+                password: password,
+                fullName: fullName,
+                status: true,
+                dateOfBirth: dateOfBirth,
+                address: address,
+                phoneNum: phoneNum,
+                roleSet: [
+                    {
+                        "id": roleSet,
+                    }
+                ]
+            }
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                data: JSON.stringify(user),
+                url: "http://localhost:8080/api/users",
+                success: function () {
+                    alert("Đăng ký thành công");
+                },
+                error: function () {
+                    alert("Lỗi rồi")
+                }
+            })
+        }
+
+    </script>
+</head>
+
+<body onload="selectRole()">
+<div class="container">
+    <div id="signupbox" style="margin-top:50px"
+         class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">Sign Up</div>
+                <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink"
+                                                                                           href="/login.jsp"
+                                                                                           onclick="$('#signupbox').hide(); $('#loginbox').show()">Sign
+                    In</a></div>
+            </div>
+            <div class="panel-body">
+                <form id="signupform" class="form-horizontal" method="post">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">UserName</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="username" placeholder="Username"
+                                   id="username">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Password</label>
+                        <div class="col-md-9">
+                            <input type="password" class="form-control" name="password" placeholder="Password"
+                                   id="password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">FullName</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="fullName" placeholder="FullName"
+                                   id="fullName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Date of birth</label>
+                        <div class="col-md-9">
+                            <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Adress</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="address" placeholder="Adress" id="address">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">PhoneNumber</label>
+                        <div class="col-md-9">
+                            <input type="number" class="form-control" name="phoneNum" placeholder="Enter phone number"
+                                   id="phoneNum">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Image</label>
+                        <div class="col-md-9">
+                            <input type="file" class="form-control" name="file" id="fileImage">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Role</label>
+                        <div class="col-md-9">
+                            <select name="roleSet" id="roleSet">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button id="btn-signup" type="submit" onclick="addUser()" class="btn btn-info">Signup</button>
+                            <span style="margin-left:8px;"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
