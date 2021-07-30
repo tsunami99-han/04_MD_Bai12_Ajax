@@ -5,12 +5,14 @@
     <title>Title</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
-        function findAllProduct(){
-            $.ajax({
+        function findByName(){
+            let name = document.getElementById("search").value;
+                $.ajax({
                 type: "GET",
-                url: "http://localhost:8080/api-products",
+                url: "http://localhost:8080/api-products/"+name,
                 success: function (products) {
-                    let str = "<table border='2px'>" +
+                    let str = "<h3>List Product</h3>"+
+                        "<table border='2px'>" +
                         "    <tr>" +
                         "        <th>Name</th>" +
                         "        <th>Price</th>" +
@@ -21,7 +23,39 @@
                         "        <th>Action</th>" +
                         "    <tr>\n";
                     for (let i = 0; i < products.length; i++) {
-                        str += '<tr><td><a onclick="viewDetail(' + products[i].id + ')">' + products[i].name + '</a></td>'+'<td>'+products[i].price+'</td><td>'+products[i].quantity+'</td><td>'+products[0].color+'</td><td>'+products[0].description+'</td><td>'+products[0].category.name+'</td><td><a href="">Edit</a>|<a href="">Delete</a></td></tr>';
+                        str += '<tr><td><a onclick="viewDetail(' + products[i].id + ')">'
+                            + products[i].name + '</a></td>'+'<td>'+products[i].price+'</td><td>'
+                            +products[i].quantity+'</td><td>'+products[i].color+'</td><td>'
+                            +products[i].description+'</td><td>'+products[i].category.name+'' +
+                            '</td><td><a onclick="formEdit(' + products[i].id + ')">Edit</a>|<a onclick="formDelete(' + products[i].id + ')">Delete</a></td></tr>';
+                    }
+                    str+='</table>',
+                        document.getElementById("main").innerHTML = str;
+                }
+            });
+        }
+        function findAllProduct(){
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api-products",
+                success: function (products) {
+                    let str = "<input type='text' id='seacrh'><button onclick='findByName()'>Search</button><br><h3>List Product</h3>"+
+                        "<table border='2px'>" +
+                        "    <tr>" +
+                        "        <th>Name</th>" +
+                        "        <th>Price</th>" +
+                        "        <th>Quantity</th>" +
+                        "        <th>Color</th>" +
+                        "        <th>Description</th>" +
+                        "        <th>Category</th>" +
+                        "        <th>Action</th>" +
+                        "    <tr>\n";
+                    for (let i = 0; i < products.length; i++) {
+                        str += '<tr><td><a onclick="viewDetail(' + products[i].id + ')">'
+                            + products[i].name + '</a></td>'+'<td>'+products[i].price+'</td><td>'
+                            +products[i].quantity+'</td><td>'+products[i].color+'</td><td>'
+                            +products[i].description+'</td><td>'+products[i].category.name+'' +
+                            '</td><td><a onclick="formEdit(' + products[i].id + ')">Edit</a>|<a onclick="formDelete(' + products[i].id + ')">Delete</a></td></tr>';
                     }
                     str+='</table>',
                     document.getElementById("main").innerHTML = str;
@@ -38,7 +72,7 @@
                     for (let i = 0; i < data.length; i++) {
                         str += "<option value='" + data[i].id + "'>" + data[i].name + "</option>"
                     }
-                    document.getElementById("sub-main").innerHTML = '<h3>Create new product</h3>' +
+                    document.getElementById("main").innerHTML = '<h3>Create new product</h3>' +
                         'Name : <input type="text" id="name"><br>' +
                         'Price : <input type="number" id="price"><br>' +
                         'Quantity : <input type="number" id="quantity"> <br>' +
@@ -76,7 +110,7 @@
                 type: "POST",
                 url: "http://localhost:8080/api-products",
                 data: JSON.stringify(product),
-                success: findAllProduct ,
+                success: findAllProduct() ,
                 error: function (error) {
 
                 }
@@ -87,25 +121,122 @@
                 type: "GET",
                 url: "http://localhost:8080/api-products/"+id,
                 success: function (data) {
-                    let str =  'ID : <input type="text" id="name" value="'+data.id+'"><br>' +
+                    let str =  'Information! <br> ID : <input type="text" id="name" disabled value="'+data.id+'"><br>' +
+                        'Name : <input type="text" id="name" disabled value="'+data.name+'"><br>' +
+                        'Price : <input type="number" id="price" disabled value="'+data.price+'"><br>' +
+                        'Quantity : <input type="number" id="quantity" disabled value="'+data.quantity+'"> <br>' +
+                        'Color : <input type="text" id="color" disabled value="'+data.color+'"><br> ' +
+                        'Description : <input type="text" disabled id="description" value="'+data.description+'"> <br>' +
+                        'Category: <input type="text" disabled id="description" value="'+data.category.name+'"> <br>'
+                    document.getElementById("sub-main").innerHTML = str;
+                },
+
+            });
+
+        }
+        function formEdit(id) {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api-products/"+id,
+                success: function (data) {
+                    let str =  'Information! <br>ID : <input type="hidden" id="id" value="'+data.id+'"><br>\'' +
                         'Name : <input type="text" id="name" value="'+data.name+'"><br>' +
                         'Price : <input type="number" id="price" value="'+data.price+'"><br>' +
                         'Quantity : <input type="number" id="quantity" value="'+data.quantity+'"> <br>' +
                         'Color : <input type="text" id="color" value="'+data.color+'"><br> ' +
                         'Description : <input type="text" id="description" value="'+data.description+'"> <br>' +
-                        'Category: <input type="text" id="description" value="'+data.category.name+'"> <br>' +
-                        '<button>Save</button>';
-                }
+                        'Category: <select name="" value="'+data.category.name+'" id="category"></select> <br>'+
+                        '<button onclick="save('+data.id+')">Save</button>'
+                    document.getElementById("main").innerHTML = str;
+                    $.ajax({
+                        type: "GET",
+                        url: "http://localhost:8080/api-categories",
+                        success: function (data) {
+                            let str = ""
+                            for (let i = 0; i < data.length; i++) {
+                                str += "<option value='" + data[i].id + "'>" + data[i].name + "</option>"
+                            }
+                            document.getElementById("category").innerHTML = str
+                        }
+                    });
+
+                },
+
             });
 
         }
+        function save(id){
+            let name = document.getElementById("name").value;
+            let price = document.getElementById("price").value;
+            let quantity = document.getElementById("quantity").value;
+            let color = document.getElementById("color").value;
+            let desc = document.getElementById("description").value;
+            let category = document.getElementById("category").value;
+            let product = {
+                name: name,
+                price: price,
+                quantity:quantity,
+                color: color,
+                description: desc,
+                category: {
+                    id: category
+                }
+            }
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "PUT",
+                url: "http://localhost:8080/api-products/"+id,
+                data: JSON.stringify(product),
+                success: findAllProduct,
+                error: function (error) {
 
+                }
+            });
+        }
+        function formDelete(id) {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api-products/"+id,
+                success: function (data) {
+                    let str =  'Bạn có chắc là muốn xóa nó không! <br>ID : <input disabled type="text" value="'+data.id+'"><br>\'' +
+                        'Name : <input type="text" disabled value="'+data.name+'"><br>' +
+                        'Price : <input type="number" disabled value="'+data.price+'"><br>' +
+                        'Quantity : <input type="number" disabled value="'+data.quantity+'"> <br>' +
+                        'Color : <input type="text" disabled value="'+data.color+'"><br> ' +
+                        'Description : <input type="text" disabled value="'+data.description+'"> <br>' +
+                        'Category: <input name=""  value="'+data.category.name+'">'+
+                        '<button onclick="remove('+data.id+')">Delete</button><button onclick="findAllProduct()">Back to list procudt</button>'
+                    document.getElementById("main").innerHTML = str;
+
+                },
+
+            });
+
+        }
+        function remove(id){
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "DELETE",
+                url: "http://localhost:8080/api-products/"+id,
+                success: findAllProduct,
+                error: function (error) {
+
+                }
+            });
+        }
     </script>
 </head>
 <body onload="findAllProduct()">
 <div>Top</div>
 <div>
     <button onclick="showFormCreate()">Create</button>
+    <button onclick="findAllProduct()">Home</button>
 </div>
 <div id="main">
     Main
@@ -114,6 +245,5 @@
     Sub-Main
 </div>
 <div>Footer</div>
-
 </body>
 </html>

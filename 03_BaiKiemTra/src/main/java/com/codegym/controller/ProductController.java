@@ -45,5 +45,15 @@ public class ProductController {
         productService.save(product);
         return new ResponseEntity(HttpStatus.OK);
     }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> edit(@PathVariable Long id){
+        productService.remove(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+    @GetMapping("/{name}")
+    public ResponseEntity<List<Product>> findAllByName(@PathVariable("name") String name){
+        List<Product> products= (List<Product>) productService.findAllByName("%"+name+"%");
+        return new ResponseEntity<>(products,HttpStatus.OK);
+    }
 
 }
