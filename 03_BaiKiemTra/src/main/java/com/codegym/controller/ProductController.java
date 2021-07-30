@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api-products")
+@RequestMapping("/api-products")
 @CrossOrigin("*")
 public class ProductController {
     @Autowired
@@ -50,9 +50,9 @@ public class ProductController {
         productService.remove(id);
         return new ResponseEntity(HttpStatus.OK);
     }
-    @GetMapping("/{name}")
-    public ResponseEntity<List<Product>> findAllByName(@PathVariable("name") String name){
-        List<Product> products= (List<Product>) productService.findAllByName("%"+name+"%");
+    @PostMapping("/search")
+    public ResponseEntity<List<Product>> findAllByName(@RequestBody Product product){
+        List<Product> products= (List<Product>) productService.findAllByName(product.getName());
         return new ResponseEntity<>(products,HttpStatus.OK);
     }
 

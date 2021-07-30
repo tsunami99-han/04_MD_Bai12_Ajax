@@ -16,15 +16,15 @@ com/codegym/config/AppConfig.java
  com.codegym.config.AppConfig
 com/codegym/formatter/CategoryFormatter.java
  com.codegym.formatter.CategoryFormatter
-com/codegym/controller/ProductController.java
- com.codegym.controller.ProductController
-com/codegym/repository/IProductRepository.java
- com.codegym.repository.IProductRepository
-com/codegym/repository/ICategoryRepository.java
- com.codegym.repository.ICategoryRepository
-com/codegym/service/category/CategoryService.java
- com.codegym.service.category.CategoryService
-com/codegym/service/product/ProductService.java
- com.codegym.service.product.ProductService
 com/codegym/service/product/IProductService.java
  com.codegym.service.product.IProductService
+com/codegym/service/category/CategoryService.java
+ com.codegym.service.category.CategoryService
+com/codegym/repository/ICategoryRepository.java
+ com.codegym.repository.ICategoryRepository
+com/codegym/service/product/ProductService.java
+ com.codegym.service.product.ProductService
+com/codegym/repository/IProductRepository.java
+ com.codegym.repository.IProductRepository
+com/codegym/controller/ProductController.java
+ com.codegym.controller.ProductController

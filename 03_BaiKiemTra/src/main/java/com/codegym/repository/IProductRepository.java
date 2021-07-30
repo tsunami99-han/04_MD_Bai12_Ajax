@@ -9,6 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IProductRepository extends PagingAndSortingRepository<Product,Long> {
 
-    @Query("select p from Product p where p.name like :name")
-    Iterable<Product> findAllByName(@Param("name") String name);
+    Iterable<Product> findAllByNameContaining(String name);
 }

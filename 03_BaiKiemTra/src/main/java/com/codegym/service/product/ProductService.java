@@ -34,6 +34,6 @@ public class ProductService implements IProductService {
 
     @Override
     public Iterable<Product> findAllByName(String name) {
-        return productRepository.findAllByName(name);
+        return productRepository.findAllByNameContaining(name);
     }
 }
